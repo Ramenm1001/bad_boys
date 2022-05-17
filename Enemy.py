@@ -1,6 +1,7 @@
 import pygame
 import random
 
+
 class Enemies(pygame.sprite.Sprite):
     def __init__(self, x, y, waypoints, image, win, group):
         super().__init__()
@@ -13,7 +14,6 @@ class Enemies(pygame.sprite.Sprite):
         self.waypoints = waypoints
         self.target = self.waypoints[self.n]
         group.add(self)
-
 
     def draw(self):
         self.win.blit(self.image, (self.rect.x, self.rect.y))
@@ -33,10 +33,11 @@ class Enemies(pygame.sprite.Sprite):
                 self.n = 0
             self.target = self.waypoints[self.n]
 
-
     def update(self):
         self.move()
         self.draw()
+        if self.hp <= 0:
+            self.kill()
 
 
 if __name__ == "__main__":
@@ -46,7 +47,7 @@ if __name__ == "__main__":
     enemies = pygame.sprite.Group()
     im = pygame.image.load("i.png")
     im = pygame.transform.scale(im, (100, 100))
-    Enemies(100, 100,[[100,100], [250, 400], [0, 0], [700, 250], [10, 350], [70, 200]], im, win, enemies)
+    Enemies(100, 100, [[100,100], [250, 400], [0, 0], [700, 250], [10, 350], [70, 200]], im, win, enemies)
     run = True
     while run:
         for event in pygame.event.get():
